@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lab @ EcoNetLab · iDiv</title>
+
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .page {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 30px;
+        }
+
+        h1 {
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.045em;
+            color: #171923;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-weight: 750;
+            line-height: 1.2;
+            letter-spacing: -0.035em;
+            color: #202334;
+            margin-bottom: 1.25rem;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont,
+                         'Segoe UI', sans-serif;
+            color: #45495a;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #626779;
+            margin-bottom: 1.25rem;
+        }
+
+        a {
+            color: #635bff;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        hr {
+            height: 4px;
+            border: none;
+            background: linear-gradient(to right, #222222, #aaaaaa);
+        }
+
+        pre {
+            background: #EEEEEE;
+            color: #222222;
+            padding: 0px;
+            border-radius: 15px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+        }
+
+        code {
+            font-size: 14px;
+        }
+
+        .center{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Table of Contents */
+        .toc {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            padding: 30px 22px;
+            background: #fafbff;
+            border-right: 1px solid #e8eaf0;
+            box-sizing: border-box;
+            overflow-y: auto;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* TOC Heading */
+        .toc h2 {
+            margin: 0 0 22px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #9298a8;
+        }
+
+        /* TOC Links */
+        .toc a {
+            display: block;
+            padding: 10px 14px;
+            margin-bottom: 4px;
+            border-radius: 8px;
+            color: #555d70;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        /* Hover */
+        .toc a:hover {
+            background: #f0efff;
+            color: #635bff;
+            border-left-color: #635bff;
+            padding-left: 18px;
+        }
+
+        /* Active Link */
+        .toc a.active {
+            background: #eeedff;
+            color: #635bff;
+            font-weight: 650;
+            border-left-color: #635bff;
+        }
+
+        /* Main Content */
+        .container {
+            margin-left: 280px;
+            padding: 40px;
+            max-width: 1100px;
+        }
+
+        /* Scrollbar */
+        .toc::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .toc::-webkit-scrollbar-thumb {
+            background: #d5d7e2;
+            border-radius: 10px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .toc {
+                position: static;
+                width: 100%;
+                height: auto;
+                max-height: 250px;
+                padding: 20px;
+                border-right: none;
+                border-bottom: 1px solid #e8eaf0;
+                margin-bottom: 20px;
+            }
+
+            .container {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .toc a {
+                display: inline-block;
+                margin-right: 6px;
+                padding: 8px 12px;
+            }
+        }
+
+    </style>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+
+    <nav class="toc">
+        <h2>Contents</h2>
+
+        <a href="#network">Computer Network</a>
+        <a href="#depz">DEPZ Accelerometer</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#github">Lab Github</a>
+        <a href="#timeplan">Time Plan</a>
+        <a href="#vibration">Vibration Primer</a>
+        <a href="#vibrocamtrom">VibroCamTron</a>
+    </nav>
+
+    <div class="page">
+
+        <h1>A guide to the CamTron lab @ EcoNetLab · iDiv</h1>
+
+        <hr>
+
+        <h2 id="network">Computer Network</h2>
+
+        The computer network consists of the following nodes:
+        <ul>
+            <li>Lab workstation <b>idivws35</b>.usr.idiv.de (172.18.227.216)</li>
+            <li>GPU server <b>idivlinuxts03</b>.usr.idiv.de (172.18.224.110)</li>
+            <li>IDIV file server (//usr.idiv.de/public), mounted in <b>/mnt/camflow/</b> and <b>/mnt/data/</b> on the workstation</li>
+            <li>Raspberry sensor system <b>raspct02</b> (172.18.224.61 or raspberrypi.local from ws35)</li>
+        </ul>
+        <p>
+            The workstation is the access point for all users of the lab and is the only machine locate in the lab room.
+            The GPU server processes the images from cameras and runs the API to interface with the cameras (port 3000).
+            The images are stored on the IDIV file server.
+            The raspberry manages the DEPZ accelerometer sensor mounted on the experimental plate.
+            The diagram below shows the main connections and functions of the machines in the network.
+        </p>
+
+        <img src="lab/network.svg" alt="Lab network" width="80%" class="center">
+
+        <hr>
+
+        <h2 id="depz">DEPZ Accelerometer</h2>
+            
+            <img src="lab/depz.png" alt="DEPZ accelerometer" width="100%">
+            
+            <p> The accelerometer is the DEPZ <a href="https://depz.ai/eu/product/imu-sensor-icm-45686-usb">IMU ICM-45686 USB Sensor</a>
+                <ul>
+                    <li>3 axes accelerometer</li>
+                    <li>±32 g up to 6400 Hz</li>
+                    <li>Noise density 70 µg/√Hz</li>
+                    <li>FIFO 8 kb</li>
+                </ul>
+            </p>
+            <p>
+                The DEPZ accelerometer communicates with the raspberry <i>raspct02</i>.
+                Data can be viewed, saved and downloaded connecting to <i>raspct02</i> through HTML (port 8080).
+                Code for acquiring data and HTML connection is hosted at <a href="https://github.com/EcoNetLab/DEPZ">https://github.com/EcoNetLab/DEPZ</a>.
+            </p>
+        <hr>
+
+        <h2 id="hardware">Hardware</h2>
+
+        <h3>Cameras Alvium G1-240c</h3>
+
+        <ul>
+            <li>Resolution = 1936 (H) × 1216 (V)</li>
+            <li>Frame rate (max) = 50 fps at 122 MByte/s, Mono8</li>
+            <li>Operating temperature = -20C to +65C</li>
+        </ul>
+
+        <img src="lab/camera-field-of-view.png" alt="Field of View" width="100%">
+
+        <hr>
+
+        <h2 id="github">Lab GitHub</h2>
+
+        <p>
+            The EcoNetLab has an organization GitHub: <a href="https://github.com/EcoNetLab">https://github.com/EcoNetLab</a>.
+            Please write to <a href="mailto:emilio.berti@idiv.de">emilio.berti@idiv.de</a> if you want access to the repositories of the organization account.
+        </p>
+
+        <hr>
+
+        <h2>Joanna's comments</h2>
+        
+        <ul>
+            <li>Remove dubious segments from the CSV</li>
+            <ol>
+                <li>Segments with points outside the arena</li>
+                <li>Segments with points jumping around</li>
+                <li>Segments along the wall?</li>
+            </ol>
+            <li>Prototype arena is smoother than the other ones</li>
+            <li>Bugs with the pipeline viewer</li>
+            <ol>
+                <li>Not closing properly</li>
+            </ol>
+            <li>Bugs with the ...</li>
+            <ol>
+                <li></li>
+            </ol>
+        </ul>
+
+        <hr>
+
+        <h2>Thomas' code</h2>
+        
+        <p>
+          Should come soon into an open source repository.
+        </p>
+
+        <p>
+          Help with the computer network:
+          <ol>
+              <li>How many computers?</li>
+              <li>Where?</li>
+              <li>What do they do?</li>
+              <li>List of IPs</li>
+              <li>Open port to outside?</li>
+          </ol>
+        </p>
+
+        <p>
+          Ask IT to store it in a long-term storage option with DOI
+        </p>
+        
+        <hr>
+
+        <h2 id="timeplan">Time Plan</h2>
+
+        <ul>
+            <li><b>November 15th</b>: end of Joanna's experiments</li>
+            <li><b>November</b>: start of Anika's experiments</li>
+        </ul>
+
+        <hr>
+
+        <h2 id="vibration">Vibration primer</h2>
+        
+        <img src="lab/wave.png" alt="Wave" width="100%">
+
+        <p>\[ Avg = \frac{2}{\pi} Peak \]</p>
+        <p>\[ RMS = \frac{Peak}{\sqrt{2}} \]</p>
+        <p>\[ \text{Crest factor} = \frac{Peak}{RMS} \]</p>
+        <p>\[ \text{Form factor} = \frac{RMS}{Avg} \]</p>
+
+        <p>
+            The <b>displacement</b> \(x(t)\) (\(m\)) at time \(t\) (\(s\)) is given by:
+            \[ x(t) = X \sin{2 \pi f t} \]
+            where \(X\) is the peak displacement and \(f\) the frequency (\(Hz\)).
+        </p>
+
+        <p>
+            The <b>acceleration</b> \(a(t)\) (\(m / s^2\)) is given by:
+            \[ a(t) = -(2 \pi f)^2 x(t) = - (2 \pi f)^2 X \sin{2 \pi f t} \]
+        </p>
+
+        <p>
+            Therefore, the <b>peak displacement</b> is given by:
+            \[ X = \frac{A}{(2 \pi f)^2} \]
+            where \(A\) is peak acceleration
+        </p>
+
+        <p>
+            From the above, two different frequencies \(f_1\) and \(f_2\) give the same peak displacement if and only if:
+            \[ \frac{A_1}{A_2} = \left( \frac{f_1}{f_2}\right)^2 \]
+            <img src="lab/peak-displacement.png" alt="Peak Displacement" width="100%">
+        </p>
+
+        <hr>
+
+        <h2 id="vibrocamtrom">VibroCamTrom</h2>
+
+        <h3>Vibration exciters</h3>
+
+        <img src="lab/hbk.svg" alt="Exciters' range" width=80%" class="center">
+
+        <h3>Frames</h3>
+
+        <p>
+            The system is built in two frames connected by vibration isolators.
+            The bottom <b>ballast frame</b> consists of a ballast steel plate to dampen the vibrations transmitted by the fridge wall and floor.
+            The top <b>isolated frame</b> consists of a sound-proof frame that contains the experimental arena and the sensors.
+            Vibration isolators are inserted below the ballast frame as well as between the two frames.
+            The camera is firmly attached to the isolated frame, as to have the same reference system of the arena.
+            The two frames will have the same dimensions.
+            The depth (\(D)\) of the fridge is smaller than its width and is the limiting factor of the frame design.
+             Because \(D = 59cm \), in order to leave a buffer distance of \(d = 1.5cm\) from the walls of the fridge, the two frames will be of \(56cm\) in width (\(W\)) and depth.
+             The frames are made of hollow squared steel beams of \(2.5 \times 2.5 cm\) and with a wall thickness of \(2mm\) and bolted together using steel connectors.
+        </p>
+
+        <h4>Ballast Frame</h4>
+
+        <p>
+            The dimensions of the ballast frame are:
+        </p>
+            <ol>
+                <li>W = 56 cm</li>
+                <li>D = 56 cm</li>
+                <li>H = ? cm</li>
+            </ol>
+
+        <img src="lab/ballast-frame-notext.svg" alt="Ballast Frame" width="100%">
+
+        <h4>Isolated Frame</h4>
+
+        <p>
+            Because the field of view of the camera at 80 cm distance is around \(88 \times 55 cm\), for a 20cm tall arena, the camera should be placed at 100cm from the arena floor, to be able to capture the whole arena ceiling.
+            The camera can be attached around 8 cm behind the lens and, thus, a length of \(10cm\) should be added to the height of the isolated frame to have a reasonable safety buffer.
+            A sound absorbing layer of acoustic foam of \(2.5cm\) will be attached to the inner wall of the isolated frame.
+            The dimensions of the isolated frame are thus:
+        </p>
+            <ol>
+                <li>W = 56 cm</li>
+                <li>D = 56 cm</li>
+                <li>H = 110 cm</li>
+            </ol>
+        <p>
+            This will fit a circular arena of outer diameter of \(50cm\).
+        </p>
+
+    </div>
+
+</body>
+</html>
