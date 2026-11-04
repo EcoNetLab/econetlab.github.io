@@ -142,7 +142,7 @@
         <h2>Contents</h2>
 
         <a href="#network">Computer Network</a>
-        <a href="#depz">DEPZ Accelerometer</a>
+        <a href="#accel">Accelerometer</a>
         <a href="#hardware">Hardware</a>
         <a href="#github">Lab Github</a>
         <a href="#timeplan">Time Plan</a>
@@ -170,7 +170,7 @@
             The workstation is the access point for all users of the lab and is the only machine locate in the lab room.
             The GPU server processes the images from cameras and runs the API to interface with the cameras (port 3000).
             The images are stored on the IDIV file server.
-            The raspberry manages the DEPZ accelerometer sensor mounted on the experimental plate.
+            The raspberry manages the EVAL-ADXL355Z accelerometer (Analog Devices Inc.) sensor mounted on the experimental plate.
             The diagram below shows the main connections and functions of the machines in the network.
         </p>
 
@@ -178,22 +178,21 @@
 
         <hr>
 
-        <h2 id="depz">DEPZ Accelerometer</h2>
+        <h2 id="accel">Accelerometer</h2>
             
-            <img src="lab/depz.png" alt="DEPZ accelerometer" width="100%">
+            <img src="lab/EVAL-ADXL354BZTOP-web-evaluation-board.gif" alt="accelerometer" width="30%px" class="center">
             
-            <p> The accelerometer is the DEPZ <a href="https://depz.ai/eu/product/imu-sensor-icm-45686-usb">IMU ICM-45686 USB Sensor</a>
+            <p> The accelerometer is the <a href="https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-ADXL35X.html">EVAL-ADXL355Z</a>
                 <ul>
-                    <li>3 axes accelerometer</li>
-                    <li>±32 g up to 6400 Hz</li>
-                    <li>Noise density 70 µg/√Hz</li>
-                    <li>FIFO 8 kb</li>
+                    <li>±2, ±4, or ±8 g</li>
+                    <li>Noise density 22.5 µg/√Hz</li>
+                    <li>Maximum output rate 4 kHz</li>
                 </ul>
             </p>
             <p>
-                The DEPZ accelerometer communicates with the raspberry <i>raspct02</i>.
+                The accelerometer communicates with the raspberry <i>raspct02</i> using the <a href="https://developer.analog.com/docs/linux/drivers/iio-accelerometer/adxl355.html">dedicated driver</a>.
                 Data can be viewed, saved and downloaded connecting to <i>raspct02</i> through HTML (port 8080).
-                Code for acquiring data and HTML connection is hosted at <a href="https://github.com/EcoNetLab/DEPZ">https://github.com/EcoNetLab/DEPZ</a>.
+                Code for acquiring data and HTML connection is hosted at <a href="https://github.com/EcoNetLab/adxl">https://github.com/EcoNetLab/adxl</a>.
             </p>
         <hr>
 
@@ -312,7 +311,7 @@
 
         <h3>Vibration exciters</h3>
 
-        <img src="lab/hbk.svg" alt="Exciters' range" width=80%" class="center">
+        <img src="lab/hbk.svg" alt="Exciters' range" width="80%" class="center">
 
         <h3>Frames</h3>
 
