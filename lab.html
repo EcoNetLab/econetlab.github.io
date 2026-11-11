@@ -124,7 +124,69 @@
       .toc a { font-size: 12px; }
     }
 
+    /* Modern scientific tables */
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 25px 0 35px;
+        background: #ffffff;
+        border: 1px solid #e1e9e5;
+        border-radius: 12px;
+        overflow: hidden;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    /* Table header */
+    thead {
+        background: #18313a;
+        color: #ffffff;
+    }
+
+    th {
+        padding: 15px 18px;
+        text-align: left;
+        font-weight: 600;
+        color: #18313a;
+        letter-spacing: 0.01em;
+    }
+
+    /* Table cells */
+    td {
+        padding: 13px 18px;
+        border-bottom: 1px solid #e8eeeb;
+        color: #52666d;
+        vertical-align: middle;
+    }
+
+    /* Alternating rows */
+    tbody tr:nth-child(even) {
+        background: #f5f8f6;
+    }
+
+    /* Hover effect */
+    tbody tr:hover {
+        background: #e8f3ef;
+        transition: background 0.2s ease;
+    }
+
+    /* Remove last border */
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Responsive tables */
+    @media (max-width: 600px) {
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+
     </style>
+
     <script>
         MathJax = {
             tex: {
@@ -183,13 +245,88 @@
             
             <img src="lab/EVAL-ADXL354BZTOP-web-evaluation-board.gif" alt="accelerometer" width="30%px" class="center">
             
-            <p> The accelerometer is the <a href="https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-ADXL35X.html">EVAL-ADXL355Z</a>
+            <p> 
+                The accelerometer is the Analog Devices <a href="https://www.analog.com/en/products/ADXL355.html#documentation">ADXL355</a>, a digital output accelerometer mounted on the <a href="https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-ADXL35X.html">EVAL-ADXL355Z</a> board.
+                The ADXL355 specifications are:
                 <ul>
-                    <li>±2, ±4, or ±8 g</li>
+                    <li>Selectable ±2, ±4, or ±8 g</li>
+                    <li>96 21-bit locations in the FIFO, i.e. 32 complete XYZ samples.</li>
                     <li>Noise density 22.5 µg/√Hz</li>
-                    <li>Maximum output rate 4 kHz</li>
+                    <li>Maximum output rate 4kHz</li>
                 </ul>
             </p>
+            <h3>ADXL355 Registry Table</h3>
+            <p>
+                <table>
+                    <tr>
+                        <th>Hex address</th>
+                        <th>Name</th>
+                        <th>Content</th>
+                    </tr>
+                    <tr>
+                        <td>0x04</td>
+                        <td>STATUS (0:3)</td>
+                        <td>DATA_RDY (0), FIFO_FULL (1), FIFO_OVR (2), ACTIVITY (3)</td>
+                    </tr>
+                    <tr>
+                        <td>0x05</td>
+                        <td>FIFO_ENTRIES (0:6)</td>
+                        <td>Number of data samples stored in the FIFO</td>
+                    </tr>
+                    <tr>
+                        <td>0x07</td>
+                        <td>TEMP1 (0:7)</td>
+                        <td>Uncalibrated temperature</td>
+                    </tr>
+                    <tr>
+                        <td>0x08 - 0x10</td>
+                        <td>DATA</td>
+                        <td>XYZ accelerometer data</td>
+                    </tr>
+                    <tr>
+                        <td>0x11</td>
+                        <td>FIFO_DATA (0:7)</td>
+                        <td>Access data in the FIFO</td>
+                    </tr>
+                    <tr>
+                        <td>0x28</td>
+                        <td>ODR_LPF (0:3) & HPF_CORNER (4:6)</td>
+                        <td>OutputDataRate_LowPassFilter & HighPassFilter_Corner</td>
+                    </tr>
+                    <tr>
+                        <td>0x29</td>
+                        <td>FIFO_SAMPLES (0:6)</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>0x2B</td>
+                        <td>EXT_SYNC (0:1)</td>
+                        <td>Set external synchronization</td>
+                    </tr>
+                    <tr>
+                        <td>0x2C</td>
+                        <td>RANGE (0:1)</td>
+                        <td>Acceleration range: 01=±2g, 10=±4g, 11=±8g</td>
+                    </tr>
+                </table>
+            </p>
+
+            <p>The <b>DRDY PIN</b> is set when new acceleration data is available and clears on FIFO read.</p>
+            <p>
+                FIFO_FULL is set when the entries in the FIFO are equal to the setting of the FIFO_SAMPLES bits and clears on a read of the status register, but only when the entries in the FIFO are less than the FIFO_SAMPLES bits.
+            </p>
+            <p>
+                FIFO data is formatted to 24 bits, three bytes, most significant byte first. A read to 0x11 (FIFO_DATA) pops a effective three equal byte words of axis data from the FIFO. Two subsequent reads or a multibyte read completes the transaction of this data onto the interface. Continued reading or a sustained multibyte read of this field continues to pop the FIFO every third byte. Multibyte reads to this address do not increment the address pointer. If this address is read due to an auto-increment from the previous address, it does not pop the FIFO. Instead, it returns zeros and increments on to the next address.
+            </p>
+            <p>
+                Read FIFO_ENTRIES (0x05) to get the number of valid locations, N. Round down to a multiple of 3 so you only read complete XYZ samples. Issue a single burst starting at 0x11 for N × 3 bytes. For each 3-byte word, check the X-marker bit to confirm alignment, then assemble the 20-bit two’s-complement value from the data bits.
+            </p>
+            <p>
+                Best setting for 0x28 (0:3) is <i>0010</i>, i.e. ODR=1000Hz and LPF=250 Hz.
+                Setting 0x28 (4:6) as <i>001</i>, i.e. HPF_CORNER=2.47Hz (for ODR=1000Hz), removes DC and slow tilt. In this case, DC is the constant gravitational force.
+            </p>
+
+
             <p>
                 The accelerometer communicates with the raspberry <i>raspct02</i> using the <a href="https://developer.analog.com/docs/linux/drivers/iio-accelerometer/adxl355.html">dedicated driver</a>.
                 Data can be viewed, saved and downloaded connecting to <i>raspct02</i> through HTML (port 8080).
