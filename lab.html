@@ -176,12 +176,53 @@
         border-bottom: none;
     }
 
-    /* Responsive tables */
+    .page figure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin: 36px auto;
+        text-align: center;
+    }
+
+    .page figure img {
+        display: block;
+        width: var(--figure-width, 80%);
+        max-width: 100%;
+        height: auto;
+        border-radius: 0;
+        border: 1px solid #e2e9e6;
+        box-shadow: 0 4px 18px rgba(24, 49, 58, 0.07);
+    }
+
+    .page figure figcaption {
+        width: var(--caption-width, 80%);
+        margin: 13px auto 0;
+        color: #657872;
+        font-size: 13px;
+        line-height: 1.65;
+        text-align: center;
+    }
+
+    /* Caption emphasis */
+    .page figure figcaption strong {
+        color: #18313a;
+        font-weight: 650;
+    }
+
+
+    /* Small screens */
     @media (max-width: 600px) {
-        table {
-            display: block;
-            overflow-x: auto;
-            white-space: nowrap;
+        .page figure {
+            margin: 26px auto;
+        }
+
+        .page figure img {
+            max-height: 420px;
+        }
+
+        .page figure figcaption {
+            font-size: 12px;
         }
     }
 
@@ -237,13 +278,20 @@
             The diagram below shows the main connections and functions of the machines in the network.
         </p>
 
-        <img src="lab/network.svg" alt="Lab network" width="80%" class="center">
+        <figure>
+            <img src="lab/network.svg" alt="Lab network" width="80%" class="center">
+            <figcaption>Overview of the lab network.</figcaption>
+        </figure>
 
         <hr>
 
         <h2 id="accel">Accelerometer</h2>
             
-            <img src="lab/EVAL-ADXL354BZTOP-web-evaluation-board.gif" alt="accelerometer" width="30%px" class="center">
+            <figure style="--figure-width: 40%; --caption-width: 60%;">
+                <img src="lab/EVAL-ADXL354BZTOP-web-evaluation-board.gif" alt="accelerometer" width="30%px" class="center">
+                <figcaption>Evaluation board with the ADXL355</figcaption>
+            </figure>
+            
             
             <p> 
                 The accelerometer is the Analog Devices <a href="https://www.analog.com/en/products/ADXL355.html#documentation">ADXL355</a>, a digital output accelerometer mounted on the <a href="https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-ADXL35X.html">EVAL-ADXL355Z</a> board.
@@ -344,7 +392,9 @@
             <li>Operating temperature = -20C to +65C</li>
         </ul>
 
-        <img src="lab/camera-field-of-view.png" alt="Field of View" width="100%">
+        <figure>
+          <img src="lab/camera-field-of-view.png" alt="Field of View" width="100%">
+        </figure>
 
         <hr>
 
