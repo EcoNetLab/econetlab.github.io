@@ -245,8 +245,8 @@
         <h2>Contents</h2>
 
         <a href="#network">Computer Network</a>
-        <a href="#accel">Accelerometer</a>
-        <a href="#hardware">Hardware</a>
+        <a href="#accel">Accelerometers</a>
+        <a href="#alvium">Cameras</a>
         <a href="#github">Lab Github</a>
         <a href="#timeplan">Time Plan</a>
         <a href="#vibration">Vibration Primer</a>
@@ -285,17 +285,19 @@
 
         <hr>
 
-        <h2 id="accel">Accelerometer</h2>
+        <h2 id="accel">Accelerometers</h2>
             
             <figure style="--figure-width: 40%; --caption-width: 60%;">
-                <img src="lab/EVAL-ADXL354BZTOP-web-evaluation-board.gif" alt="accelerometer" width="30%px" class="center">
+                <img src="lab/EVAL-ADXL355Z.png" alt="accelerometer" width="30%px" class="center">
                 <figcaption>Evaluation board with the ADXL355</figcaption>
             </figure>
             
             
-            <p> 
+            <p>
                 The accelerometer is the Analog Devices <a href="https://www.analog.com/en/products/ADXL355.html#documentation">ADXL355</a>, a digital output accelerometer mounted on the <a href="https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/EVAL-ADXL35X.html">EVAL-ADXL355Z</a> board.
                 The ADXL355 specifications are:
+            </p>
+            <p>
                 <ul>
                     <li>Selectable ±2, ±4, or ±8 g</li>
                     <li>96 21-bit locations in the FIFO, i.e. 32 complete XYZ samples.</li>
@@ -303,6 +305,24 @@
                     <li>Maximum output rate 4kHz</li>
                 </ul>
             </p>
+            <p>
+                The EVAL-ADXL355Z is an evaluation board that allows quick evaluation of the performance of the accelerometer.
+                The evaluation board has two sets (P1 and P2) of 6 pinholes.
+                Note that the STBY pin is a legacy leftover, as it is connected to a RESERVED pin the ADXL355.
+                As per documentation, this pin can be connected to ground or <u>left open</u>.
+            </p>
+
+            <figure style="--figure-width: 100%; --caption-width: 60%;">
+                <img src="lab/eval-adxl355z-pins.png" alt="Evaluation board pins" width="30%px" class="center">
+                <figcaption>Evaluation board with the ADXL355</figcaption>
+            </figure>
+
+            <p>
+                The accelerometer communicates with the raspberry <i>raspct02</i> using the <a href="https://developer.analog.com/docs/linux/drivers/iio-accelerometer/adxl355.html">dedicated driver</a>.
+                Data can be viewed, saved and downloaded connecting to <i>raspct02</i> through HTML (port 8080).
+                Code for acquiring data and HTML connection is hosted at <a href="https://github.com/EcoNetLab/adxl">https://github.com/EcoNetLab/adxl</a>.
+            </p>
+
             <h3>ADXL355 Registry Table</h3>
             <p>
                 <table>
@@ -374,17 +394,9 @@
                 Setting 0x28 (4:6) as <i>001</i>, i.e. HPF_CORNER=2.47Hz (for ODR=1000Hz), removes DC and slow tilt. In this case, DC is the constant gravitational force.
             </p>
 
-
-            <p>
-                The accelerometer communicates with the raspberry <i>raspct02</i> using the <a href="https://developer.analog.com/docs/linux/drivers/iio-accelerometer/adxl355.html">dedicated driver</a>.
-                Data can be viewed, saved and downloaded connecting to <i>raspct02</i> through HTML (port 8080).
-                Code for acquiring data and HTML connection is hosted at <a href="https://github.com/EcoNetLab/adxl">https://github.com/EcoNetLab/adxl</a>.
-            </p>
         <hr>
 
-        <h2 id="hardware">Hardware</h2>
-
-        <h3 id="alvium">Cameras Alvium G1-240c</h3>
+        <h2 id="alvium">Cameras Alvium G1-240c</h2>
 
         <ul>
             <li>Resolution = 1936 (H) × 1216 (V)</li>
