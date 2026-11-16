@@ -368,8 +368,8 @@
                     </tr>
                     <tr>
                         <td>0x2B</td>
-                        <td>EXT_SYNC (0:1)</td>
-                        <td>Set external synchronization</td>
+                        <td>EXT_SYNC (0:1) & EXT_CLK (2)</td>
+                        <td>Set external synchronization and external clock</td>
                     </tr>
                     <tr>
                         <td>0x2C</td>
@@ -392,6 +392,9 @@
             <p>
                 Best setting for 0x28 (0:3) is <i>0010</i>, i.e. ODR=1000Hz and LPF=250 Hz.
                 Setting 0x28 (4:6) as <i>001</i>, i.e. HPF_CORNER=2.47Hz (for ODR=1000Hz), removes DC and slow tilt. In this case, DC is the constant gravitational force.
+            </p>
+            <p>
+                <i>EXT_CLK = 1</i> configures an external clock, which must be at 1,024 MHz. <i>EXT_SYNC = 01</i> configures external synchronization without interpolation. When configured, the DRDY pin takes in an SYNC signal, which must be at least 3.91 µs. This set up required only one SYNC pulse, after which the sensor is synchronized with the master.
             </p>
 
         <hr>
